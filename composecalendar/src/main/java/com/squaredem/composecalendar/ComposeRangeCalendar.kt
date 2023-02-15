@@ -57,6 +57,7 @@ fun ComposeRangeCalendar(
         )
     }
     AlertDialog(
+        containerColor = calendarColors.containerColor,
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
@@ -65,12 +66,18 @@ fun ComposeRangeCalendar(
                 },
                 enabled = selectedDate != null,
             ) {
-                Text(stringResource(id = android.R.string.ok))
+                Text(
+                    text = stringResource(id = android.R.string.ok),
+                    color = calendarColors.monthChevron
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(id = android.R.string.cancel))
+                Text(
+                    text = stringResource(id = android.R.string.cancel),
+                    color = calendarColors.monthChevron
+                )
             }
         },
         text = {

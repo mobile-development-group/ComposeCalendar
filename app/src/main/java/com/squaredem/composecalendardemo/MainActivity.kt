@@ -27,6 +27,7 @@ import java.time.LocalDate
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import com.squaredem.composecalendar.ComposeRangeCalendar
 import com.squaredem.composecalendar.RangeDatePicker
 import com.squaredem.composecalendar.SelectedDateView
@@ -207,6 +208,9 @@ private fun MainActivityContent() {
                     dateFormatWithoutYear = "dd MMM",
                     emptyTitle = "Selected range",
                     dateJoiner = " -> ",
+                ),
+                calendarColors = CalendarDefaults.defaultColors(
+                    containerColor = Color.White
                 )
             )
 

@@ -15,20 +15,13 @@
  */
 
 package com.squaredem.composecalendar
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
-import com.squaredem.composecalendar.model.CalendarMode
-import com.squaredem.composecalendar.model.CalendarColors
-import com.squaredem.composecalendar.model.CalendarContentConfig
-import com.squaredem.composecalendar.model.CalendarDefaults
-import com.squaredem.composecalendar.model.DefaultTitleFormatters
+import com.squaredem.composecalendar.model.*
 import java.time.LocalDate
 
 /**
@@ -58,17 +51,24 @@ fun ComposeCalendar(
     }
 
     AlertDialog(
+        containerColor = calendarColors.containerColor,
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
                 onDone(selectedDate.value)
             }) {
-                Text(stringResource(id = android.R.string.ok))
+                Text(
+                    text = stringResource(id = android.R.string.ok),
+                    color = calendarColors.monthChevron
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(id = android.R.string.cancel))
+                Text(
+                    text = stringResource(id = android.R.string.cancel),
+                    color = calendarColors.monthChevron
+                )
             }
         },
         text = {

@@ -40,6 +40,7 @@ object CalendarDefaults {
 
     @Composable
     fun defaultColors(
+        containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
         monthChevron: Color = MaterialTheme.colorScheme.onPrimaryContainer,
         defaultText: Color = MaterialTheme.colorScheme.onPrimaryContainer,
         disabledText: Color = MaterialTheme.colorScheme.primary,
@@ -58,6 +59,7 @@ object CalendarDefaults {
         headerText: Color = MaterialTheme.colorScheme.onPrimaryContainer,
         dividerColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f),
     ) = CalendarColors(
+        containerColor = containerColor,
         monthChevron = monthChevron,
         defaultText = defaultText,
         disabledText = disabledText,

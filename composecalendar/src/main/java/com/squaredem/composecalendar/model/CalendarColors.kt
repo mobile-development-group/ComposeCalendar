@@ -20,7 +20,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 /**
- * @param monthChevron next and previous month chevrons color.
+ * @param containerColor background dialog color.
+ * @param monthChevron next and previous month chevrons, control buttons "Cancel" and "OK" color.
  * @param defaultText default day text color.
  * @param disabledText disabled days text color.
  * @param selectedDayBackground background color of the selected day, or start and end days.
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.Color
  * @param dividerColor color for the calendar dividers.
  */
 data class CalendarColors(
+    val containerColor: Color,
     val monthChevron: Color,
     val defaultText: Color,
     val disabledText: Color,
@@ -66,6 +68,7 @@ internal val ColorScheme: CalendarColors
 internal val LocalCalendarColorScheme = staticCompositionLocalOf { initialCalendarColors() }
 
 internal fun initialCalendarColors(): CalendarColors = CalendarColors(
+    containerColor = Color.White,
     monthChevron = Color.Black,
     defaultText = Color.Black,
     disabledText = Color.Gray,
