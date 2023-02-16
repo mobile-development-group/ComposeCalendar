@@ -75,9 +75,9 @@ dependencies {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'com.squaredem'
+    PUBLISH_GROUP_ID = 'io.github.mobile-development-group'
     PUBLISH_ARTIFACT_ID = 'composecalendar'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_VERSION = '2.1.2'
 }
 
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

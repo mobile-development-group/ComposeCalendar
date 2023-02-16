@@ -49,7 +49,7 @@ afterEvaluate {
                 pom {
                     name = PUBLISH_ARTIFACT_ID
                     description = 'A basic library that provides an Android composable view which allows selection of a date from a calendar.'
-                    url = 'https://github.com/lampione/ComposeCalendar'
+                    url = 'https://github.com/mobile-development-group/ComposeCalendar'
                     licenses {
                         license {
                             name = 'The Apache License, Version 2.0'
@@ -64,9 +64,9 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        connection = 'scm:git:github.com/lampione/ComposeCalendar.git'
-                        developerConnection = 'scm:git:ssh://github.com/lampione/ComposeCalendar.git'
-                        url = 'https://github.com/lampione/ComposeCalendar/tree/main'
+                        connection = 'scm:git:github.com/mobile-development-group/ComposeCalendar.git'
+                        developerConnection = 'scm:git:ssh://github.com/mobile-development-group/ComposeCalendar.git'
+                        url = 'https://github.com/mobile-development-group/ComposeCalendar/tree/main'
                     }
                 }
             }
@@ -75,5 +75,10 @@ afterEvaluate {
 }
 
 signing {
+    useInMemoryPgpKeys(
+            rootProject.ext["signing.keyId"],
+            rootProject.ext["signing.key"],
+            rootProject.ext["signing.password"],
+    )
     sign publishing.publications
 }

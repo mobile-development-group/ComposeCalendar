@@ -19,6 +19,7 @@ package com.squaredem.composecalendar.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -56,7 +57,10 @@ internal fun CalendarDay(
     }
 
     if (date.isInDateRange && dayOption.isClickable) {
-        currentModifier = currentModifier.clickable {
+        currentModifier = currentModifier.clickable(
+            indication = null,
+            interactionSource = MutableInteractionSource()
+        ) {
             onSelected(date.localDate)
         }
     }
