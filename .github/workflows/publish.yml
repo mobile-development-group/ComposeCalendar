@@ -1,10 +1,8 @@
 name: Publish
 
 on:
-  workflow_run:
-    workflows: ["ReleaseStart"]
-    types:
-      - completed
+  release:
+    types: [published]
 
 jobs:
   publish:
