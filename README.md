@@ -1,5 +1,7 @@
 # ComposeCalendar
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mobile-development-group/composecalendar.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.github.mobile-development-group/composecalendar/)
+
 This library provides a beautiful date picker for Jetpack Compose, following the latest material 3
 guidelines.
 
