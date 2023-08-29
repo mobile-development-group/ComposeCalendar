@@ -16,40 +16,37 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.squaredem.composecalendardemo.ui.theme.ComposeCalendarDemoTheme
-import java.time.LocalDate
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import com.squaredem.composecalendar.ComposeRangeCalendar
 import com.squaredem.composecalendar.RangeDatePicker
 import com.squaredem.composecalendar.SelectedDateView
-import com.squaredem.composecalendar.model.DateRangeSelection
 import com.squaredem.composecalendar.model.CalendarDefaults
 import com.squaredem.composecalendar.model.CalendarMode
+import com.squaredem.composecalendar.model.DateRangeSelection
 import com.squaredem.composecalendar.model.DayOption
 import com.squaredem.composecalendar.model.DefaultTitleFormatters
 import com.squaredem.composecalendar.model.ExtraButtonHelperType
 import com.squaredem.composecalendar.model.ForcedSelectMode
 import com.squaredem.composecalendar.model.WeekDaysMode
+import com.squaredem.composecalendardemo.ui.theme.ComposeCalendarDemoTheme
 import java.time.DayOfWeek
+import java.time.LocalDate
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeCalendarDemoTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     MainActivityContent()
                 }
             }
@@ -59,20 +56,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainActivityContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         var calendarMode: CalendarDisplayMode by rememberSaveable {
             mutableStateOf(CalendarDisplayMode.Hidden)
         }
         var selectedDateText by rememberSaveable { mutableStateOf<String?>(null) }
         var selectedRange by remember { mutableStateOf<DateRangeSelection?>(null) }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             selectedDateText?.let {
                 Text(text = it)
             }
@@ -90,35 +81,30 @@ private fun MainActivityContent() {
             }
 
             var mode by remember {
-                mutableStateOf(
-                    CalendarMode.Range(
-                        minDate = LocalDate.now().minusMonths(2),
-                        maxDate = LocalDate.MAX,
-                        selection = null,
-                    )
-                )
+                mutableStateOf(CalendarMode.Range(
+                    minDate = LocalDate.now().minusMonths(2),
+                    maxDate = LocalDate.MAX,
+                    selection = null,
+                ))
             }
             var calendarConfig by remember {
-                mutableStateOf(
-                    CalendarDefaults.defaultContentConfig(
-                        showSelectedDateTitle = false,
-                        calendarYearPickerFormat = "MMM YY",
-                        weekdaysMode = WeekDaysMode.DoubleLetter,
-                        extraButtonHelper = ExtraButtonHelperType.Today,
-                        hasDividers = true,
-                        calendarDayOption = {
-                            // Example of a filter for days.
-                            when (it.dayOfWeek) {
-                                in listOf(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY) -> {
-                                    DayOption.Disabled(true)
-                                }
-
-                                else -> DayOption.Default
+                mutableStateOf(CalendarDefaults.defaultContentConfig(
+                    showSelectedDateTitle = false,
+                    calendarYearPickerFormat = "MMM YY",
+                    weekdaysMode = WeekDaysMode.DoubleLetter,
+                    extraButtonHelper = ExtraButtonHelperType.Today,
+                    hasDividers = true,
+                    calendarDayOption = { // Example of a filter for days.
+                        when (it.dayOfWeek) {
+                            in listOf(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY) -> {
+                                DayOption.Disabled(true)
                             }
-                        },
-                        weekStartDay = DayOfWeek.TUESDAY,
-                    )
-                )
+
+                            else -> DayOption.Default
+                        }
+                    },
+                    weekStartDay = DayOfWeek.TUESDAY,
+                ))
             }
             AnimatedVisibility(
                 visible = calendarMode == CalendarDisplayMode.InPlace,
@@ -175,17 +161,9 @@ private fun MainActivityContent() {
                         )
                     }
 
-                    RangeDatePicker(
-                        mode = mode,
-                        onChanged = {
-                            mode = it
-                        },
-                        contentConfig = calendarConfig,
-                        calendarColors = CalendarDefaults.defaultColors(
-                            monthChevron = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
+                    RangeDatePicker(mode = mode, onChanged = {
+                        mode = it
+                    }, contentConfig = calendarConfig, calendarColors = CalendarDefaults.defaultColors(monthChevron = MaterialTheme.colorScheme.primary), modifier = Modifier.padding(horizontal = 16.dp))
 
                     Button(onClick = { calendarMode = CalendarDisplayMode.Hidden }) {
                         Text(text = "Dismiss")
@@ -194,28 +172,17 @@ private fun MainActivityContent() {
             }
         }
 
-        if (calendarMode == CalendarDisplayMode.Popup) {
-            // Range popup.
-            ComposeRangeCalendar(
-                initialSelection = selectedRange,
-                minDate = LocalDate.of(2019, 1, 1),
-                maxDate = LocalDate.now(),
-                onDone = {
-                    selectedRange = it
-                    selectedDateText = generateSelectionText(it)
-                    calendarMode = CalendarDisplayMode.Hidden
-                },
-                onDismiss = { calendarMode = CalendarDisplayMode.Hidden },
-                titleFormatter = DefaultTitleFormatters.dateRange(
-                    dateFormat = "dd MMM yyyy",
-                    dateFormatWithoutYear = "dd MMM",
-                    emptyTitle = "Selected range",
-                    dateJoiner = " -> ",
-                ),
-                calendarColors = CalendarDefaults.defaultColors(
-                    containerColor = Color.White
-                )
-            )
+        if (calendarMode == CalendarDisplayMode.Popup) { // Range popup.
+            ComposeRangeCalendar(initialSelection = selectedRange, minDate = LocalDate.of(2019, 1, 1), maxDate = LocalDate.now(), onDone = {
+                selectedRange = it
+                selectedDateText = generateSelectionText(it)
+                calendarMode = CalendarDisplayMode.Hidden
+            }, onDismiss = { calendarMode = CalendarDisplayMode.Hidden }, titleFormatter = DefaultTitleFormatters.dateRange(
+                dateFormat = "dd MMM yyyy",
+                dateFormatWithoutYear = "dd MMM",
+                emptyTitle = "Selected range",
+                dateJoiner = " -> ",
+            ), calendarColors = CalendarDefaults.defaultColors(containerColor = Color.White))
 
             // Single date popup.
             /*
@@ -258,7 +225,5 @@ private fun DefaultPreview() {
 }
 
 enum class CalendarDisplayMode {
-    Hidden,
-    Popup,
-    InPlace,
+    Hidden, Popup, InPlace,
 }

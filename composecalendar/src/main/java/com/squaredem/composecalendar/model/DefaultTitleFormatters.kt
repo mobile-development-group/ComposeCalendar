@@ -28,7 +28,7 @@ object DefaultTitleFormatters {
      * @param emptyTitle title used when no date is selected.
      */
     fun singleDate(
-        dateFormat: String = "MMM DD yyyy",
+        dateFormat: String = "MMM dd yyyy",
         emptyTitle: String = "Selected date",
     ): (LocalDate?) -> String = { date ->
         date?.let {
