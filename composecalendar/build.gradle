@@ -17,6 +17,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -55,7 +56,6 @@ android {
 }
 
 dependencies {
-
     implementation "androidx.compose.material3:material3:$material3_version"
 
     // compose-ui
@@ -74,11 +74,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
-
-ext {
-    PUBLISH_GROUP_ID = 'com.squaredem'
-    PUBLISH_ARTIFACT_ID = 'composecalendar'
-    PUBLISH_VERSION = '2.1.0'
-}
-
-apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
