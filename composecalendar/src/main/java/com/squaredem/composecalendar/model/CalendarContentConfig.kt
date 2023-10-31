@@ -17,6 +17,7 @@ package com.squaredem.composecalendar.model
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -50,9 +51,30 @@ data class CalendarContentConfig(
     val todayTitle: String,
 )
 
+/**
+ * TextStyle config for the calendar.
+ *
+ * @param topBarRange top bar when is in range picker mode (popup).
+ * @param topBarSingle top bar when is single picker mode (popup).
+ * @param monthLabel month/month year indicator label.
+ * @param todayButton today button.
+ * @param yearPickerItem year picker items.
+ * @param weekDay week day header.
+ * @param calendarDay calendar day items text.
+ */
+data class CalendarTextStyleConfig(
+    val topBarRange: TextStyle,
+    val topBarSingle: TextStyle,
+    val monthLabel: TextStyle,
+    val todayButton: TextStyle,
+    val yearPickerItem: TextStyle,
+    val weekDay: TextStyle,
+    val calendarDay: TextStyle,
+)
+
 sealed class DayOption {
     data class Disabled(val selectable: Boolean = false) : DayOption()
-    object Default : DayOption()
+    data object Default : DayOption()
 
     val isClickable: Boolean
         get() = when (this) {

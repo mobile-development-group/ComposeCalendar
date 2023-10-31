@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 
 /**
  * @param monthChevron next and previous month chevrons color.
@@ -83,4 +84,21 @@ internal fun initialCalendarColors(): CalendarColors = CalendarColors(
     dayOfWeek = Color.Black,
     headerText = Color.Black,
     dividerColor = Color.Black,
+)
+
+internal val LocalCalendarTextStyles = staticCompositionLocalOf { initialCalendarTextStyles() }
+
+internal val TextStyles: CalendarTextStyleConfig
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalCalendarTextStyles.current
+
+private fun initialCalendarTextStyles(): CalendarTextStyleConfig = CalendarTextStyleConfig(
+    topBarRange = TextStyle(),
+    topBarSingle = TextStyle(),
+    monthLabel = TextStyle(),
+    todayButton = TextStyle(),
+    yearPickerItem = TextStyle(),
+    weekDay = TextStyle(),
+    calendarDay = TextStyle(),
 )

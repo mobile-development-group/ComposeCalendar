@@ -40,15 +40,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.squaredem.composecalendar.model.ColorScheme
+import com.squaredem.composecalendar.model.TextStyles
 import com.squaredem.composecalendar.utils.LogCompositions
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.OffsetTime
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @Composable
 internal fun CalendarMonthYearSelector(
@@ -121,8 +121,7 @@ private fun YearPicker(
                     Date.from(pagerDate.atTime(OffsetTime.now()).toInstant())
                 ),
                 color = ColorScheme.yearPickerTitleHighlight,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
+                style = TextStyles.monthLabel,
             )
 
             Icon(
@@ -153,8 +152,7 @@ private fun TodayButton(
                 text = todayTitle,
                 modifier = Modifier.padding(vertical = 4.dp),
                 color = ColorScheme.todayButtonText,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
+                style = TextStyles.todayButton,
             )
         }
     }

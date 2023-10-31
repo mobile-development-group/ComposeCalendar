@@ -25,6 +25,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.squaredem.composecalendar.model.ColorScheme
+import com.squaredem.composecalendar.model.TextStyles
 import com.squaredem.composecalendar.utils.LogCompositions
 
 @Composable
@@ -46,7 +47,11 @@ internal fun CalendarYear(
                 contentColor = ColorScheme.yearPickerSelectedText,
             ),
         ) {
-            Text("$year", maxLines = 1)
+            Text(
+                text = "$year",
+                maxLines = 1,
+                style = TextStyles.yearPickerItem,
+            )
         }
     } else if (isCurrentYear) {
         OutlinedButton(
@@ -58,7 +63,11 @@ internal fun CalendarYear(
                 contentColor = ColorScheme.yearPickerCurrentYearHighlight,
             ),
         ) {
-            Text("$year", maxLines = 1)
+            Text(
+                text = "$year",
+                maxLines = 1,
+                style = TextStyles.yearPickerItem,
+            )
         }
     } else {
         TextButton(
@@ -67,7 +76,11 @@ internal fun CalendarYear(
                 contentColor = ColorScheme.yearPickerText,
             ),
         ) {
-            Text("$year", maxLines = 1)
+            Text(
+                text = "$year",
+                maxLines = 1,
+                style = TextStyles.yearPickerItem,
+            )
         }
     }
 }
