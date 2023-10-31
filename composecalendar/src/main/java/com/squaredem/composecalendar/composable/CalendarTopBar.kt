@@ -19,13 +19,13 @@ package com.squaredem.composecalendar.composable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.squaredem.composecalendar.model.CalendarMode
 import com.squaredem.composecalendar.model.ColorScheme
+import com.squaredem.composecalendar.model.TextStyles
 import com.squaredem.composecalendar.utils.LogCompositions
 
 @Composable
@@ -44,8 +44,8 @@ internal fun CalendarTopBar(mode: CalendarMode) {
         Text(
             text = text,
             style = when (mode) {
-                is CalendarMode.Range -> MaterialTheme.typography.headlineMedium
-                is CalendarMode.Single -> MaterialTheme.typography.headlineLarge
+                is CalendarMode.Range -> TextStyles.topBarRange
+                is CalendarMode.Single -> TextStyles.topBarSingle
             },
             color = ColorScheme.headerText,
         )

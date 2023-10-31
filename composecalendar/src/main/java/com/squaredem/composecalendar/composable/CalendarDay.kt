@@ -34,12 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.squaredem.composecalendar.model.ColorScheme
 import com.squaredem.composecalendar.model.Config
 import com.squaredem.composecalendar.model.DateWrapper
 import com.squaredem.composecalendar.model.DayOption
 import com.squaredem.composecalendar.model.HighlightedType
+import com.squaredem.composecalendar.model.TextStyles
 import com.squaredem.composecalendar.utils.LogCompositions
 import com.squaredem.composecalendar.utils.isFirstDayOfWeek
 import com.squaredem.composecalendar.utils.isLastDayOfWeek
@@ -220,7 +220,7 @@ internal fun CalendarDay(
             text = text,
             color = textColor,
             textAlign = TextAlign.Center,
-            fontSize = 14.sp,
+            style = TextStyles.calendarDay,
         )
     }
 }

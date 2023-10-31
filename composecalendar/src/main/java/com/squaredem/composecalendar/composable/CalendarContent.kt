@@ -52,11 +52,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.squaredem.composecalendar.daterange.DateRange
@@ -66,11 +64,14 @@ import com.squaredem.composecalendar.model.CalendarColors
 import com.squaredem.composecalendar.model.CalendarContentConfig
 import com.squaredem.composecalendar.model.CalendarDefaults
 import com.squaredem.composecalendar.model.CalendarMode
+import com.squaredem.composecalendar.model.CalendarTextStyleConfig
 import com.squaredem.composecalendar.model.ColorScheme
 import com.squaredem.composecalendar.model.Config
 import com.squaredem.composecalendar.model.ExtraButtonHelperType
 import com.squaredem.composecalendar.model.LocalCalendarColorScheme
 import com.squaredem.composecalendar.model.LocalCalendarConfig
+import com.squaredem.composecalendar.model.LocalCalendarTextStyles
+import com.squaredem.composecalendar.model.TextStyles
 import com.squaredem.composecalendar.utils.LogCompositions
 import com.squaredem.composecalendar.utils.assertValidPageOrNull
 import com.squaredem.composecalendar.utils.closestValidRange
@@ -81,13 +82,11 @@ import com.squaredem.composecalendar.utils.logDebugWarning
 import com.squaredem.composecalendar.utils.nextPage
 import com.squaredem.composecalendar.utils.previousPage
 import java.time.LocalDate
-import java.util.*
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 internal fun CalendarContent(
     mode: CalendarMode,
@@ -95,11 +94,13 @@ internal fun CalendarContent(
     modifier: Modifier = Modifier,
     contentConfig: CalendarContentConfig = CalendarDefaults.defaultContentConfig(),
     calendarColors: CalendarColors = CalendarDefaults.defaultColors(),
+    calendarTextStyles: CalendarTextStyleConfig = CalendarDefaults.defaultTextStyles(),
 ) {
     LogCompositions("CalendarContent")
     CompositionLocalProvider(
         LocalCalendarColorScheme provides calendarColors,
         LocalCalendarConfig provides contentConfig,
+        LocalCalendarTextStyles provides calendarTextStyles,
     ) {
         val dateRange by remember(mode) {
             derivedStateOf { getDateRange(mode.minDate, mode.maxDate) }
@@ -312,7 +313,7 @@ internal fun CalendarContent(
                                         modifier = Modifier.weight(1f),
                                         text = contentConfig.weekDaysMode.getText(it),
                                         textAlign = TextAlign.Center,
-                                        fontWeight = FontWeight.SemiBold,
+                                        style = TextStyles.weekDay,
                                         color = ColorScheme.dayOfWeek,
                                     )
                                 }
@@ -353,7 +354,6 @@ internal fun CalendarContent(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 private fun getStartPage(
     startDate: LocalDate,
     dateRange: DateRange,

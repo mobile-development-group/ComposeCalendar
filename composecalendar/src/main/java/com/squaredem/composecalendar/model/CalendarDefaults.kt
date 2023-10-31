@@ -17,6 +17,8 @@ package com.squaredem.composecalendar.model
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import java.time.DayOfWeek
@@ -86,5 +88,26 @@ object CalendarDefaults {
         dayOfWeek = dayOfWeek,
         headerText = headerText,
         dividerColor = dividerColor,
+    )
+
+    @Composable
+    fun defaultTextStyles(
+        topBarRange: TextStyle = MaterialTheme.typography.headlineMedium,
+        topBarSingle: TextStyle = MaterialTheme.typography.headlineLarge,
+        monthLabel: TextStyle = MaterialTheme.typography.titleSmall,
+        todayButton: TextStyle = MaterialTheme.typography.titleSmall,
+        yearPickerItem: TextStyle = MaterialTheme.typography.titleMedium,
+        weekDay: TextStyle = MaterialTheme.typography.titleMedium.copy(
+            fontWeight = FontWeight.SemiBold,
+        ),
+        calendarDay: TextStyle = MaterialTheme.typography.bodyMedium,
+    ) = CalendarTextStyleConfig(
+        topBarRange = topBarRange,
+        topBarSingle = topBarSingle,
+        monthLabel = monthLabel,
+        todayButton = todayButton,
+        yearPickerItem = yearPickerItem,
+        weekDay = weekDay,
+        calendarDay = calendarDay,
     )
 }
