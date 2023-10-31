@@ -20,11 +20,11 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 26
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -78,7 +78,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'com.squaredem'
     PUBLISH_ARTIFACT_ID = 'composecalendar'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_VERSION = '2.1.0'
 }
 
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
