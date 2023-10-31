@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Locale
 
+@Deprecated("Not being maintained anymore.")
 @Composable
 fun SelectedDateView(
     value: LocalDate?,

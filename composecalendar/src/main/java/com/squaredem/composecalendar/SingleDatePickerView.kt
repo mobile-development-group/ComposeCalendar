@@ -17,10 +17,11 @@ package com.squaredem.composecalendar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.squaredem.composecalendar.composable.CalendarContent
-import com.squaredem.composecalendar.model.CalendarMode
 import com.squaredem.composecalendar.model.CalendarColors
 import com.squaredem.composecalendar.model.CalendarContentConfig
 import com.squaredem.composecalendar.model.CalendarDefaults
+import com.squaredem.composecalendar.model.CalendarMode
+import com.squaredem.composecalendar.model.CalendarTextStyleConfig
 
 /**
  * Display a single date picker calendar in place.
@@ -32,6 +33,7 @@ fun SingleDatePicker(
     modifier: Modifier = Modifier,
     contentConfig: CalendarContentConfig = CalendarDefaults.defaultContentConfig(),
     calendarColors: CalendarColors = CalendarDefaults.defaultColors(),
+    calendarTextStyles: CalendarTextStyleConfig = CalendarDefaults.defaultTextStyles(),
 ) {
     CalendarContent(
         mode = mode,
@@ -39,5 +41,6 @@ fun SingleDatePicker(
         modifier = modifier,
         contentConfig = contentConfig,
         calendarColors = calendarColors,
+        calendarTextStyles = calendarTextStyles,
     )
 }

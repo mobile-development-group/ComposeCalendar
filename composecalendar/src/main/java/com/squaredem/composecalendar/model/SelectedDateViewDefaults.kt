@@ -68,10 +68,12 @@ object SelectedDateViewDefaults {
     )
 }
 
+@Deprecated("Not being maintained anymore.")
 data class SelectedDateViewConfig(
     val dateFormat: String,
 )
 
+@Deprecated("Not being maintained anymore.")
 data class SelectedDateViewColors(
     val highlightColor: Color,
     val neutralColor: Color,
@@ -79,6 +81,7 @@ data class SelectedDateViewColors(
     val errorColor: Color,
 )
 
+@Deprecated("Not being maintained anymore.")
 data class SelectedDateViewTextStyles(
     val label: TextStyle,
     val hint: TextStyle,
