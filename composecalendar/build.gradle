@@ -82,7 +82,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.squaredem.composecalendar'
                 artifactId = 'composecalendar'
-                version = '2.5.0'
+                version = '2.5.3'
             }
         }
     }
