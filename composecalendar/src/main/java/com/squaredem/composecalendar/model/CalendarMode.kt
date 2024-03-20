@@ -56,6 +56,9 @@ sealed class CalendarMode {
     ) : CalendarMode()
 }
 
+internal fun CalendarMode.Range.hasEndDate(): Boolean =
+    selection?.endDate != null && selection.endDate != selection.startDate
+
 internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range = when {
     selection == null -> {
         copy(
@@ -66,23 +69,33 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
 
     selectionMode == ForcedSelectMode.StartDate -> {
         when {
-            selection.endDate == null && day.isAfter(selection.startDate) -> copy(
+            !hasEndDate() && day.isAfter(selection.startDate) -> copy(
                 selection = DateRangeSelection(day),
                 selectionMode = ForcedSelectMode.EndDate
             )
 
-            selection.endDate == null && day.isBefore(selection.startDate) -> copy(
+            !hasEndDate() && day.isBefore(selection.startDate) -> copy(
                 selection = DateRangeSelection(day, startDate),
                 selectionMode = ForcedSelectMode.EndDate
             )
 
-            selection.endDate == null && day == selection.startDate -> copy(
+            !hasEndDate() && day == selection.startDate -> copy(
                 selection = null,
                 selectionMode = ForcedSelectMode.StartDate
             )
 
-            selection.endDate != null && day.isBefore(selection.endDate) -> copy(
+            !hasEndDate() && day.isBefore(selection.endDate) -> copy(
                 selection = selection.copy(startDate = day),
+                selectionMode = ForcedSelectMode.EndDate
+            )
+
+            day == selection.startDate -> copy(
+                selection = selection.endDate?.let { DateRangeSelection(it) },
+                selectionMode = ForcedSelectMode.EndDate
+            )
+
+            day == selection.endDate -> copy(
+                selection = selection.copy(startDate = day, endDate = null),
                 selectionMode = ForcedSelectMode.EndDate
             )
 
@@ -102,11 +115,11 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
                 )
             )
 
-            selection.endDate == null && day.isAfter(selection.startDate) -> copy(
+            !hasEndDate() && day.isAfter(selection.startDate) -> copy(
                 selection = selection.copy(endDate = day)
             )
 
-            selection.endDate == null && day == selection.startDate -> copy(
+            !hasEndDate() && day == selection.startDate -> copy(
                 selection = null,
                 selectionMode = ForcedSelectMode.StartDate,
             )
@@ -115,11 +128,11 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
                 selection = DateRangeSelection(startDate = day),
             )
 
-            selection.endDate != null && day.isBefore(selection.endDate) -> copy(
+            hasEndDate() && day.isBefore(selection.endDate) -> copy(
                 selection = selection.copy(endDate = day),
             )
 
-            selection.endDate != null && day == selection.endDate -> copy(
+            hasEndDate() && day == selection.endDate -> copy(
                 selection = selection.copy(endDate = null),
             )
 
