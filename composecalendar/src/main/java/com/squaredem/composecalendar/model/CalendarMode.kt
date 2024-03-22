@@ -56,7 +56,7 @@ sealed class CalendarMode {
     ) : CalendarMode()
 }
 
-internal fun CalendarMode.Range.hasEndDate(): Boolean =
+internal fun CalendarMode.Range.rangeSelected(): Boolean =
     selection?.endDate != null && selection.endDate != selection.startDate
 
 internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range = when {
@@ -69,32 +69,44 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
 
     selectionMode == ForcedSelectMode.StartDate -> {
         when {
-            !hasEndDate() && day.isAfter(selection.startDate) -> copy(
+            // BO: Single date selected, and the new date is after selected start ->
+            // Continue single selection on the selected day.
+            !rangeSelected() && day.isAfter(selection.startDate) -> copy(
                 selection = DateRangeSelection(day),
                 selectionMode = ForcedSelectMode.EndDate
             )
 
-            !hasEndDate() && day.isBefore(selection.startDate) -> copy(
+            // BO: Single date selected, and the new date is before selected start ->
+            // Date range from the selected date to the previous start date.
+            !rangeSelected() && day.isBefore(selection.startDate) -> copy(
                 selection = DateRangeSelection(day, startDate),
                 selectionMode = ForcedSelectMode.EndDate
             )
 
-            !hasEndDate() && day == selection.startDate -> copy(
+            // BO: Single date selected, and the new date is the same as start ->
+            // Clear selection.
+            !rangeSelected() && day == selection.startDate -> copy(
                 selection = null,
                 selectionMode = ForcedSelectMode.StartDate
             )
 
-            !hasEndDate() && day.isBefore(selection.endDate) -> copy(
-                selection = selection.copy(startDate = day),
-                selectionMode = ForcedSelectMode.EndDate
-            )
-
-            day == selection.startDate -> copy(
+            // BO: Range selected, and the date selected is the start date ->
+            // Deselect start date.
+            rangeSelected() && day == selection.startDate -> copy(
                 selection = selection.endDate?.let { DateRangeSelection(it) },
                 selectionMode = ForcedSelectMode.EndDate
             )
 
-            day == selection.endDate -> copy(
+            // BO: Range selected, and the date selected is before end date ->
+            // Make a range from selection to end date.
+            rangeSelected() && day.isBefore(selection.endDate) -> copy(
+                selection = selection.copy(startDate = day),
+                selectionMode = ForcedSelectMode.EndDate
+            )
+
+            // BO: Range selected, and the new date is the end date ->
+            // Deselect end date.
+            rangeSelected() && day == selection.endDate -> copy(
                 selection = selection.copy(startDate = day, endDate = null),
                 selectionMode = ForcedSelectMode.EndDate
             )
@@ -108,6 +120,8 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
 
     selectionMode == ForcedSelectMode.EndDate -> {
         when {
+            // BO: Date selected is before the start date ->
+            // Make single selection with the selected day.
             day.isBefore(selection.startDate) -> copy(
                 selection = selection.copy(
                     startDate = day,
@@ -115,24 +129,28 @@ internal fun CalendarMode.Range.onDayClicked(day: LocalDate): CalendarMode.Range
                 )
             )
 
-            !hasEndDate() && day.isAfter(selection.startDate) -> copy(
+            // BO: Single selection, and the new date is after start date ->
+            // Make range from old start to selected day.
+            !rangeSelected() && day.isAfter(selection.startDate) -> copy(
                 selection = selection.copy(endDate = day)
             )
 
-            !hasEndDate() && day == selection.startDate -> copy(
+            // BO: Single selection, and the new date is the same as start ->
+            // Clear selection.
+            !rangeSelected() && day == selection.startDate -> copy(
                 selection = null,
                 selectionMode = ForcedSelectMode.StartDate,
             )
 
-            day == selection.startDate -> copy(
-                selection = DateRangeSelection(startDate = day),
+            // BO: Range selection, and the new date is the start date ->
+            // Clear start selection.
+            rangeSelected() && day == selection.startDate -> copy(
+                selection = selection.endDate?.let { DateRangeSelection(it) }
             )
 
-            hasEndDate() && day.isBefore(selection.endDate) -> copy(
-                selection = selection.copy(endDate = day),
-            )
-
-            hasEndDate() && day == selection.endDate -> copy(
+            // BO: Range selection, and the new date is the end date ->
+            // Clear end selection.
+            rangeSelected() && day == selection.endDate -> copy(
                 selection = selection.copy(endDate = null),
             )
 
